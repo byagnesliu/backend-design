@@ -1,0 +1,605 @@
+<!--jQuery CSS PlugIn-->
+<link type="text/css" rel="stylesheet" href="css/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="css/jsgrid-theme.min.css" />
+<link type="text/css" rel="stylesheet" href="css/sumoselect.css" />
+<link type="text/css" rel="stylesheet" href="css/jquery.filer.css" />
+<link type="text/css" rel="stylesheet" href="css/jquery.filer-dragdropbox-theme.css"  />
+<link href="css/jquery.steps.css" rel="stylesheet"/>
+
+
+<!--css-->
+<style>
+
+/*Header*/
+.header-text {
+    border-bottom: 5px solid #ddd;
+    padding-bottom: 10px;
+    margin:10px 10px 20px 10px;
+}
+
+.rowStyle{
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 15px;
+}
+
+#addProduct{
+	float:right;
+	font-weight: 600;
+	background-color: #DD6B58;;
+    border-color: #D49382;
+}
+
+#addProduct:hover{
+	background-color: #C95F4E;;
+    border-color: #D49382;
+}
+
+/*EditorBg*/
+.overlay {
+    display: none;
+    z-index: 99;
+    background: #F8C8BD none repeat scroll 0% 0%;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.overlay .fa{
+    padding: 15px;
+    float: right;
+    margin:15px;
+
+}
+
+#overlayComment{
+    background: #F5E1B1 none repeat scroll 0% 0%;
+}
+
+.overlayBox{
+    margin:10px;
+    min-height:95%;
+    padding:5% 10%;
+    color:#333;
+    background:white;
+    font-family: '微軟正黑體','Nixie One',  sans-serif;
+    font-size: 13pt;
+}
+
+/*Steps*/
+.wizard > .steps .current a, .wizard > .steps .current a:hover, .wizard > .steps .current a:active {
+    background: #d48267;
+    color: #fff;
+    cursor: default;
+}
+
+.wizard > .steps .done a, .wizard > .steps .done a:hover, .wizard > .steps .done a:active {
+    background: #e4b7a8;;
+    color: #fff;
+}
+
+.wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active {
+    background: #e1824f;
+}
+
+/*Selector*/
+.SumoSelect .select-all{
+	height: 100%;
+}
+
+/*Upload CoverImg*/
+.jFiler-theme-default .jFiler-input{
+    width:100%;
+}
+
+/*Editor Form*/
+.form-horizontal .form-group{
+	margin:0px;
+	margin-bottom:10px; 
+}
+
+/*Comment*/
+#commentInfo{
+    margin: 0px auto;
+    color:#4C5C68;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+/*Modal*/
+.modal-backdrop.in{
+    opacity: 0.8;
+}
+
+.modal-dialog {
+    padding: 10% 40px 40px 40px;
+}
+
+.modal-content{
+    border: 3px solid #fff;
+    background:#FCF3E1; 
+    border-radius:3px;
+}
+
+.modal-header{
+    background:#58A4B0 ;
+}
+
+.modal-title {
+    font-weight: 700;
+    text-align: center;
+    color: #ffffff;
+}
+
+</style>
+
+
+
+<!--Html-->
+<div>
+    <h4 class="header-text">商品管理 Product Management</h4>
+    <div class="row rowStyle">
+		<button type="button" class="btn btn-info" id="addProduct"><i class="fa fa-file-text"></i>  新增商品</button>
+	</div>
+
+	<!--Table-->
+    <div class="table-responsive">        
+        <table class="table table-striped" id="productGrid">
+        </table>
+    </div>
+
+    <!--Show Contents For Edit-->
+    <div class="overlay" id="overlayEdit">
+        
+        <a href=""><i class="fa fa-times fa-lg"></i></a>
+        
+        <div class="overlayBox">            
+            <h4 class="header-text">商品管理 Product Management</h4> 
+
+            <form class="form-horizontal" id="producteForm" data-validate="parsley" novalidate>
+                <div id="formWizardEdit" class="light-background">
+                    <h2>商品標籤</h2>
+                     <section>
+                        <div class="padding-md">
+                            
+                            <div class="form-group">
+                                <label>商品貨號:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="P00001" required="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>商品類別:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="類別一" required="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>商品圖示:</label>
+                                <div>
+                                    <input type="file" name="files[]" id="uploadCoverImg">                       
+                                </div>
+                            </div>
+                    </section>
+
+                    <h2>商品內容</h2>
+                    <section>
+                        <div class="padding-md">
+
+                            <div class="form-group">
+                                <label>商品品名:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="品名一" required="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>商品定價:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="100" required="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>紅利點數:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="2" required="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>進貨數量:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="10" required="">
+                                </div>
+                            </div>
+                                               
+                        </div>
+                    </section>
+
+                    <h2>商品介紹</h2>
+                    <section>
+                        <div class="padding-md">
+
+                            <div class="form-group">
+                                <div><div id="editor"></div></div>                     
+                            </div>
+                                               
+                        </div>
+                    </section>
+                  
+                </div>
+            </form> 
+        </div>
+
+    </div>
+
+    <!--Show Contents For Q&A-->
+    <div class="overlay" id="overlayComment">
+        
+        <a href=""><i class="fa fa-times fa-lg"></i></a>
+        
+        <div class="overlayBox">            
+            <h4 class="header-text">商品問與答 Product Q&A</h4> 
+            <div class="row" style="margin: 0px auto; color:#BF714D; font-weight: 600; opacity: 0.7; padding-bottom: 15px;">
+                <p class="col-md-3">商品貨號: P00001</p>
+                <p class="col-md-3">商品品名: 品名一</p>
+                <p class="col-md-3">商品類別: 類別一</p>
+                <p class="col-md-3">商品價格: 100</p>
+            </div>
+
+            <div class="table-responsive">        
+                <table class="table table-striped" id="productCommentGrid">
+                </table>
+            </div>            
+        </div>
+
+    </div>
+
+
+    <!--Show Q&A Modal-->
+    <div class="modal fade" id="myCommentModal" role="dialog" >
+        <div class="modal-dialog">
+            <div class="modal-content" >
+                    
+                <div class="modal-header" >
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">商品問與答</h4>
+                </div>
+                    
+                <div class="modal-body" >
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">留言</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" disabled>若購買超過10個，能否提供免運服務?</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">回覆</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="3" placeholder="回覆...."></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                    
+                <div class="modal-footer">
+                    <button type="cancel" class="btn btn-info" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-info" data-dismiss="modal">確定</button>
+                </div>
+                    
+            </div>
+        </div> 
+    </div>   
+
+</div>	
+
+
+
+
+<!-- jQuery JS PlugIn -->
+<script src="js/parsley.min.js"></script>
+<script src='js/jquery.steps.min.js'></script>
+<script type="text/javascript" src="js/jquery.sumoselect.min.js"></script>
+<script src="js/jquery.filer.min.js"></script>
+
+
+
+<!--javascript-->
+<script>
+
+/*Datas of Table For Product Info*/
+$(function ()   {
+    var db = {
+
+        loadData: function(filter) {
+            return $.grep(this.products, function(products) {
+                return (!filter.productName || products.productName.indexOf(filter.productName) > -1)
+                    && (!filter.productType || products.productType.indexOf(filter.productType) > -1)
+                    && (!filter.productId || products.productId.indexOf(filter.productId) > -1)
+                    && (!filter.productPrice || products.productPrice.indexOf(filter.productPrice) > -1)
+                    && (!filter.productStock || products.productStock.indexOf(filter.productStock) > -1)
+                    && (!filter.productView || products.productView.indexOf(filter.productView) > -1)
+                    && (!filter.productPriority || products.productView.indexOf(filter.productPriority) > -1)
+                    && (filter.productPublish === undefined || products.productPublish === filter.productPublish);
+            });
+        }
+
+    };
+
+    window.db = db;
+
+
+    db.products = [
+        {
+            "productImg":"http://placehold.it/120x80",
+            "productName": "品名一",
+            "productType": "類別一",
+            "productId":"P00001",
+            "productPrice":"100",
+            "productStock":"10",
+            "productView":"20",
+            "productPriority":"1",
+            "productPublish":true
+        },{
+            "productImg":"http://placehold.it/120x80",
+            "productName": "品名二",
+            "productType": "類別二",
+            "productId":"P00002",
+            "productPrice":"120",
+            "productStock":"15",
+            "productView":"15",
+            "productPriority":"1",
+            "productPublish":true
+        },{
+            "productImg":"http://placehold.it/120x80",
+            "productName": "品名三",
+            "productType": "類別三",
+            "productId":"P00003",
+            "productPrice":"1250",
+            "productStock":"10",
+            "productView":"10",
+            "productPriority":"1",
+            "productPublish":false
+        },{
+            "productImg":"http://placehold.it/120x80",
+            "productName": "品名四",
+            "productType": "類別四",
+            "productId":"P00005",
+            "productPrice":"1200",
+            "productStock":"12",
+            "productView":"19",
+            "productPriority":"1",
+            "productPublish":false
+        }
+
+    ];
+
+
+    /*Editor of Table With jQuery For Product Info*/
+    $("#productGrid").jsGrid({
+        
+        height: 360,
+        width: "100%",
+        
+        //Functions
+        filtering:true,
+        editing: false,
+        sorting: true,
+        paging: true,
+        autoload: true,
+        pageSize: 3,
+        pageButtonCount: 5,
+        deleteConfirm: "確定刪除這筆資料?",
+        rowClick: false,
+
+        //Data
+        controller: db,
+
+        //Fields
+        fields: [
+            {
+              name: "productImg",title:"圖示",
+              itemTemplate: function(val, item) {
+                    return $("<img>").attr("src", val);
+              },align: "center",width:120
+            },
+            { name: "productName", title:"品名",type: "text", width: 100 ,align:"center",editing:false},
+            { name: "productType", title:"類別",type: "text", width: 100 ,align:"center",editing:false},
+            { name: "productId", title:"貨號",type: "text", width: 100 ,align:"center",editing:false},
+            { name: "productPrice", title:"價格",type: "text", width: 60 ,align:"center",editing:false},
+            { name: "productStock", title:"庫存",type: "text", width: 60 ,align:"center",editing:false},
+            { name: "productView", title:"觀看",type: "text", width: 60,align:"center",editing:false},
+            { name: "productPriority", title:"順序",type: "text", width: 60,align:"center"},            
+            { name: "productPublish", type: "checkbox", title: "上架", sorting: true },
+            { name: "productEdit",title:"商品編輯", width: 90,align: "center",
+                itemTemplate: function(_, item) {
+                    return $("<button>").text('編輯')
+                           .css('background','#E76F51')
+                           .css('border','1px solid #E76F81')
+                           .css('border-radius','3px')
+                           .css('color','white')
+                           .css('text-align','center')
+                           .on("click", function() {
+                                $("#overlayEdit").fadeToggle(200);
+                        });
+                }
+            },
+            { name: "productComment",title:"Q&A", width: 90,align: "center",
+                itemTemplate: function(_, item) {
+                    return $("<button>").text('問與答')
+                           .css('background','#F4A261')
+                           .css('border','1px solid #F4A361')
+                           .css('border-radius','3px')
+                           .css('color','white')
+                           .css('text-align','center')
+                           .on("click", function() {
+                                $("#overlayComment").fadeToggle(200);
+                        });
+                }
+            },
+            { type: "control" }
+        ]
+    });
+});
+
+
+/*Datas of Table For Product Q&A Info*/
+$(function ()   {
+    var commentData = [
+        {
+            "commentPerson":"王曉明",
+            "commentEmail": "email@gmail.com",
+            "commentDate": "2016/02/07",
+            "commentReply":true
+        },{
+            "commentPerson":"劉曉恩",
+            "commentEmail": "email@gmail.com",
+            "commentDate": "2016/02/07",
+            "commentReply":true
+        },{
+            "commentPerson":"陳曉東",
+            "commentEmail": "email@gmail.com",
+            "commentDate": "2016/02/08",
+            "commentReply":true
+        },{
+            "commentPerson":"王曉明",
+            "commentEmail": "email@gmail.com",
+            "commentDate": "2016/02/09",
+            "commentReply":false
+        },{
+            "commentPerson":"劉曉恩",
+            "commentEmail": "email@gmail.com",
+            "commentDate": "2016/02/17",
+            "commentReply":true
+        }
+    ];
+
+
+    /*Editor of Table With jQuery For Product Q&A Info*/
+    $("#productCommentGrid").jsGrid({
+        
+        height: 250,
+        width: "100%",
+        
+        //Functions
+        sorting: true,
+        paging: true,
+        autoload: true,
+        pageSize: 5,
+        pageButtonCount: 5,
+        deleteConfirm: "確定刪除這筆資料?",
+        rowClick: false,
+
+        //Data
+        data:commentData,
+
+        //Fields
+        fields: [
+            { name: "commentPerson", title:"聯絡人",type: "text", width: 100 ,align:"center",editing:false},
+            { name: "commentEmail", title:"信箱",type: "text", width: 150 ,align:"center",editing:false},
+            { name: "commentDate", title:"留言日期",type: "text", width: 120 ,align:"center",editing:false},         
+            { name: "commentReply", type: "checkbox", title: "回覆", sorting: true,editing:false },
+            { name: "commentList",title:"留言內容", width: 120,align: "center",
+                itemTemplate: function(_, item) {
+                    return $("<button>").text('內容')
+                           .css('background','#E76F51')
+                           .css('border','1px solid #E76F81')
+                           .css('border-radius','3px')
+                           .css('color','white')
+                           .css('text-align','center')
+                           .on("click", function() {
+                                $('#myCommentModal').modal('show');
+                        });
+                }
+            },
+            { type: "control" ,editButton:false}
+        ]
+    });
+
+    /*Q&A dialog*/
+
+});
+
+
+/*Close or Open Member Record*/
+$(function ()   {
+    $('#addProduct').on('click', function () {
+        $("#overlayEdit").fadeToggle(200);
+    });
+
+    $('#overlayEdit .fa').on('click', function () {
+        $("#overlayEdit").fadeToggle(200);
+    });
+
+    $('#overlayComment .fa').on('click', function () {
+        $("#overlayComment").fadeToggle(200);
+    });
+
+});
+
+
+/*Steps*/
+$(function ()   {
+    $("#formWizardEdit").steps({
+        headerTag: "h2",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        onStepChanging: function (event, currentIndex, newIndex) { 
+                            if(newIndex > currentIndex) { 
+                                if($('#producteForm').parsley().validate('step' + newIndex)) {
+                                    return true;
+                                }
+                                else    {
+                                    return false;
+                                }
+                            }
+                            else    {
+                                return true;
+                            }                      
+        },
+        onFinished: function (event, currentIndex) { 
+                            $("#overlayEdit").fadeToggle(200);
+        }
+    });
+
+});
+
+
+/*Selector*/
+$(document).ready(function() {
+    $('.SlectBox').SumoSelect({ csvDispCount: 3});
+});
+
+
+/*CoverImg Upload*/
+$('#uploadCoverImg').filer({
+    limit: 1,
+    maxSize: 3,
+    extensions: ['jpg', 'jpeg', 'png', 'gif'],
+    changeInput: true,
+    showThumbs: true
+});
+
+
+/*Editor*/
+$(function ()   {
+    $('#editor').html("<form><textarea id=foo></textarea></form>");
+
+    $('textarea#foo').ckeditor({
+        height: "210px",
+        width: "100%",
+        toolbarStartupExpanded: true,
+    });
+});
+
+</script>

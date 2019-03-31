@@ -1,0 +1,339 @@
+<!--jQuery CSS PlugIn-->
+<link type="text/css" rel="stylesheet" href="css/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="css/jsgrid-theme.min.css" />
+<link type="text/css" rel="stylesheet" href="css/sumoselect.css" />
+<link type="text/css" rel="stylesheet" href="css/jquery.filer.css" />
+<link type="text/css" rel="stylesheet" href="css/jquery.filer-dragdropbox-theme.css"  />
+<link href="css/jquery.steps.css" rel="stylesheet"/>
+
+
+<!--css-->
+<style>
+/*Header*/
+.header-text {
+    border-bottom: 5px solid #ddd;
+    padding-bottom: 10px;
+    margin:10px 10px 20px 10px;
+}
+
+.rowStyle{
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 15px;
+}
+
+#addKnowledge{
+	float:right;
+	font-weight: 600;
+	background-color: #68B1D2;
+    border-color: #82B9D4;
+}
+
+#addKnowledge:hover{
+	background-color: #4FA2C8;
+    border-color: #898AAB;
+}
+
+/*EditorBg*/
+.overlay {
+    display: none;
+    z-index: 99;
+    background: #98C5DA none repeat scroll 0% 0%;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.overlay .fa{
+    padding: 15px;
+    float: right;
+    margin:15px;
+
+}
+
+.editorBox{
+    margin:10px;
+    min-height:95%;
+    padding:5% 10%;
+    color:#333;
+    background:white;
+    font-family: '微軟正黑體','Nixie One',  sans-serif;
+    font-size: 13pt;
+}
+
+/*Steps*/
+.wizard > .steps .current a, .wizard > .steps .current a:hover, .wizard > .steps .current a:active {
+    background: #67b9d4;
+    color: #fff;
+    cursor: default;
+}
+
+.wizard > .steps .done a, .wizard > .steps .done a:hover, .wizard > .steps .done a:active {
+    background: #b0d8ea;
+    color: #fff;
+}
+
+.wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active {
+    background: #74b6d5;
+
+/*Selector*/
+.SumoSelect .select-all{
+	height: 100%;
+}
+
+/*Upload CoverImg*/
+.jFiler-theme-default .jFiler-input{
+    width:100%;
+}
+
+/*Editor Form*/
+.form-horizontal .form-group{
+	margin:0px;
+	margin-bottom:10px; 
+}
+
+</style>
+
+
+
+<!--Html-->
+<div>
+    <h4 class="header-text">知識分享 Knowledge Management</h4>
+    <div class="row rowStyle">
+		<button type="button" class="btn btn-info" id="addKnowledge"><i class="fa fa-file-text"></i>  新增知識訊息</button>
+	</div>
+
+	<!--Table-->
+    <div class="table-responsive">        
+        <table class="table table-striped" id="knowledgeGrid">
+        </table>
+    </div>
+
+    <!--Show Contents-->
+    <div class="overlay">
+        
+        <a href=""><i class="fa fa-times fa-lg"></i></a>
+        
+        <div class="editorBox">            
+            <h4 class="header-text">知識分享 Knowledge Sharing</h4> 
+
+            <form class="form-horizontal" id="knowledgeForm" data-validate="parsley" novalidate>
+                <div id="formWizard" class="light-background">
+                    <h2>知識標題</h2>
+                     <section>
+                        <div class="padding-md">
+
+                            <div class="form-group">
+                                <label>發布對象:</label>
+                                <div>                      
+                                    <select multiple="multiple" class="SlectBox" >
+                                        <option value="branchA">太平分公司</option>
+                                        <option value="branchB">大里分公司</option>
+                                        <option value="branchC">神岡分公司</option>
+                                        <option value="branchD">新社分公司</option>
+                                        <option value="branchE">北京分公司</option>
+                                    </select>   
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>知識標題:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="標題一" required="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>封面照片:</label>
+                                <div>
+                                    <input type="file" name="files[]" id="uploadCoverImg">                       
+                                </div>
+                            </div>
+                    </section>
+
+
+                    <h2>知識內容</h2>
+                    <section>
+                        <div class="padding-md">
+
+                            <div class="form-group">
+                                <div><div id="editor"></div></div>                     
+                            </div>
+                                               
+                        </div>
+                    </section>
+                  
+                </div>
+            </form> 
+        </div>
+
+    </div>
+</div>	
+
+
+
+
+<!-- jQuery JS PlugIn -->
+<script src="js/parsley.min.js"></script>
+<script src='js/jquery.steps.min.js'></script>
+<script type="text/javascript" src="js/jquery.sumoselect.min.js"></script>
+<script src="js/jquery.filer.min.js"></script>
+
+
+
+<!--javascript-->
+<script>
+
+/*Datas of Table For Knowledge Info*/
+$(function ()   {
+    var data = [
+        {
+            "activityDate": "2016/02/01",
+            "activityTitle": "知識標題一",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":true
+        },{
+            "activityDate": "2016/02/02",
+            "activityTitle": "知識標題二",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":true
+        },{
+            "activityDate": "2016/02/03",
+            "activityTitle": "知識標題三",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":true
+        },{
+            "activityDate": "2016/02/04",
+            "activityTitle": "知識標題四",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":false
+        },{
+            "activityDate": "2016/02/05",
+            "activityTitle": "知識標題五",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":true
+        }
+
+    ];
+
+
+    /*Editor of Table With jQuery For Knowledge Info*/
+    $("#knowledgeGrid").jsGrid({
+        
+        height: 360,
+        width: "100%",
+        
+        //Functions
+        editing: true,
+        sorting: true,
+        paging: true,
+        autoload: true,
+        pageSize: 3,
+        pageButtonCount: 5,
+        deleteConfirm: "確定刪除這筆資料?",
+        rowClick: false,
+
+        //Data
+        data:data,
+
+        //Fields
+        fields: [
+            { name: "activityDate", title:"發布日期",type: "text", width: 120 ,align:"center",editing:false},
+            { name: "activityTitle", title:"知識標題",type: "text", width: 150 },
+            {
+              name: "activityImgSrc",title:"封面照片",
+              itemTemplate: function(val, item) {
+                    return $("<img>").attr("src", val);
+              },align: "center",width:120
+            },
+            { name: "activityPublish", type: "checkbox", title: "發布", sorting: false },
+            { name: "activityEdit",title:"內容編輯", width: 90,align: "center",
+                itemTemplate: function(_, item) {
+                    return $("<button>").text('編輯')
+                           .css('background','#7AC1E3')
+                           .css('border','1px solid #D5E3F3')
+                           .css('border-radius','3px')
+                           .css('color','white')
+                           .css('text-align','center')
+                           .on("click", function() {
+                                $(".overlay").fadeToggle(200);
+                        });
+                }
+            },
+            { type: "control" }
+        ]
+    });
+});
+
+
+/*Close or Open Member Record*/
+$(function ()   {
+    $('#addKnowledge').on('click', function () {
+        $(".overlay").fadeToggle(200);
+    });
+
+    $('.overlay .fa').on('click', function () {
+        $(".overlay").fadeToggle(200);
+    });
+
+});
+
+
+/*Steps*/
+$(function ()   {
+    $("#formWizard").steps({
+        headerTag: "h2",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        onStepChanging: function (event, currentIndex, newIndex) { 
+                            if(newIndex > currentIndex) { 
+                                if($('#knowledgeForm').parsley().validate('step' + newIndex)) {
+                                    return true;
+                                }
+                                else    {
+                                    return false;
+                                }
+                            }
+                            else    {
+                                return true;
+                            }                      
+        },
+        onFinished: function (event, currentIndex) { 
+                            $(".overlay").fadeToggle(200);
+        }
+    });
+});
+
+
+/*Selector*/
+$(document).ready(function() {
+    $('.SlectBox').SumoSelect({ csvDispCount: 3});
+});
+
+
+/*CoverImg Upload*/
+$('#uploadCoverImg').filer({
+    limit: 1,
+    maxSize: 3,
+    extensions: ['jpg', 'jpeg', 'png', 'gif'],
+    changeInput: true,
+    showThumbs: true
+});
+
+
+/*Editor*/
+$(function ()   {
+    $('#editor').html("<form><textarea id=foo></textarea></form>");
+
+    $('textarea#foo').ckeditor({
+        height: "210px",
+        width: "100%",
+        toolbarStartupExpanded: true,
+    });
+});
+
+</script>

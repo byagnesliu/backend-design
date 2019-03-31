@@ -1,0 +1,334 @@
+<!--CSS-->
+<link rel="stylesheet" type="text/css" href="css/jquery-jvectormap-2.0.3.css">
+
+<style>
+	/*Box*/
+	.miniBox{
+		min-height: 80px;
+		padding: 20px 10px 20px 20px;
+		margin-bottom: 20px;
+		background-color: #FFFFFF;
+		border: 2px solid transparent;
+		border-radius: 3px;
+		box-shadow: 0 1px 1px #C1C1C1;
+	}
+
+	.boxIcon{
+		display: block;
+	    float: left;
+	    margin:0px 20px 0px 10px;
+	    padding-top: 20px;
+	    width: 65px;
+	    height: 65px;
+	    line-height: 65px;
+	    border-radius: 50%;
+	    text-align: center;
+	    font-size: 35px;
+	    color: #fff;
+	}
+
+	.boxInfo p{
+		margin: 0px;
+		color:#949495;;
+		font-weight: 600;
+	}
+
+	/*Bar Chart*/
+	.charBox{
+		margin-bottom: 20px;
+		padding: 2px;
+		background-color: #FFFFFF;
+		border: 2px solid transparent;
+		border-radius: 3px;
+		box-shadow: 0 1px 1px #C1C1C1;
+		color:#656361;
+		font-weight: 600;
+	}
+
+	.charTitle{
+		padding: 5px 10px 10px 10px;
+		border-radius: 3px;
+		font-size: 15px;
+	}
+
+	.chatInfo{
+		padding: 20px;
+	}
+</style>
+
+
+<!--Html-->
+<div>
+
+	<!--Box Info-->
+	<div class="row">
+		<div class="col-md-3 col-sm-6">
+			<div class="miniBox">
+				<span class="boxIcon" style="background-color:#43C673;">
+					<i class="fa fa-rocket"></i>
+				</span>
+				<div class="boxInfo">
+					<p><span style="font-size:32px">25</span>%</p>
+					<p>擴店成長 Growth</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 col-sm-6">
+			<div class="miniBox">
+				<span class="boxIcon" style="background-color:#2EC1CC;">
+					<i class="fa fa-users"></i>
+				</span>
+				<div class="boxInfo">
+					<p><span style="font-size:32px">25,000</span></p>
+					<p>會員人數 Member</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 col-sm-6">
+			<div class="miniBox">
+				<span class="boxIcon" style="background-color:#F8C83F;">
+					<i class="fa fa-usd"></i>
+				</span>
+				<div class="boxInfo">
+					<p><span style="font-size:32px">45,500</span></p>
+					<p>公司營利 Profit</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-3 col-sm-6">
+			<div class="miniBox">
+				<span class="boxIcon" style="background-color:#ea7317;">
+					<i class="fa fa-shopping-cart"></i>
+				</span>
+				<div class="boxInfo">
+					<p><span style="font-size:32px">3,210</span></p>
+					<p>交易次數 Sales</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Bar Chart And Map-->
+	<div class="row">
+		<div class="col-md-7">
+			<div class="charBox">
+				<div class="charTitle" style="background-color: #C8F0CC;border-top: 2px solid #B0D891;">
+					近月營運報告 Monthly Report
+				</div>
+				<div class="chatInfo"><canvas id="myBarChart"></canvas></div>
+			</div>
+		</div>
+
+		<div class="col-md-5">
+			<div class="charBox">
+				<div class="charTitle" style="background-color: #C8F0CC;border-top: 2px solid #B0D891;">
+					公司分布 Company Location
+				</div>
+				<div class="chatInfo"><div id="companyWorldMap" style="height:50%"></div></div>
+			</div>
+		</div>
+	</div>
+
+	<!--DonutChart And Prize And LineChart-->
+	<div class="row">
+		<div class="col-md-4">
+			<div class="charBox">
+				<div class="charTitle" style="background-color: #C8F0CC;border-top: 2px solid #B0D891;">
+					售出商品類別 Sales Report
+				</div>
+				<div class="chatInfo" style="min-height:200px;">
+					<canvas id="myDonutChart"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="charBox">
+				<div class="charTitle" style="background-color: #C8F0CC;border-top: 2px solid #B0D891;">
+					最佳銷售商品 Best Sales 
+				</div>
+				<div class="chatInfo"  style="height:200px;">
+					<div class="table-responsive">          
+						<table class="table">
+						    <thead>
+						      <tr>
+						        <th>#</th>
+						        <th>商品品名</th>
+						        <th>售出數量</th>
+						        <th>觀看次數</th>
+						      </tr>
+						    </thead>
+
+						    <tbody>
+						      <tr>
+						        <td>1</td>
+						        <td>葉黃素</td>
+						        <td>4,000</td>
+						        <td>40%</td>
+						      </tr>
+
+						      <tr>
+						        <td>2</td>
+						        <td>太陽眼鏡</td>
+						        <td>300</td>
+						        <td>25%</td>
+						      </tr>
+
+						      <tr>
+						        <td>3</td>
+						        <td>抗藍光眼鏡</td>
+						        <td>120</td>
+						        <td>10%</td>
+						      </tr>						      
+						    </tbody>
+
+					  	</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="charBox">
+				<div class="charTitle" style="background-color: #C8F0CC;border-top: 2px solid #B0D891;">
+					瀏覽人次 Visitors
+				</div>
+				<div class="chatInfo">
+					<canvas id="myLineChart"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<!--javascript-->
+<script type="text/javascript" src="js/Chart.min.js"></script>
+<script type="text/javascript" src="js/jquery-jvectormap-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/jquery-jvectormap-world-mill-en.js"></script>
+
+<script>
+	/*Bar Chart*/
+	$(function(){
+		var barChartData = {
+		    labels: ["2015年9月", "2015年10月", "2015年11月", "2015年12月", "2016年1月", "2016年2月"],
+		    datasets: [
+		        {
+		            label: "My First dataset",
+		            fillColor: "rgba(220,220,220,0.5)",
+		            strokeColor: "rgba(220,220,220,0.8)",
+		            highlightFill: "rgba(220,220,220,0.75)",
+		            highlightStroke: "rgba(220,220,220,1)",
+		            data: [65, 59, 80, 81, 56, 55]
+		        },
+		        {
+		            label: "My Second dataset",
+		            fillColor: "rgba(151,187,205,0.5)",
+		            strokeColor: "rgba(151,187,205,0.8)",
+		            highlightFill: "rgba(151,187,205,0.75)",
+		            highlightStroke: "rgba(151,187,205,1)",
+		            data: [28, 48, 40, 19, 86, 100]
+		        }
+		    ]
+		};
+
+		var barChartoptions = {
+	  		responsive: true
+		};
+
+		var ctx = $("#myBarChart").get(0).getContext("2d");
+		var myBarChart = new Chart(ctx).Bar(barChartData,barChartoptions);
+	});
+
+	/*Company Location Map*/
+	$(function(){
+      $('#companyWorldMap').vectorMap({
+      		map: 'world_mill_en',
+    		scaleColors: ["#ffee93", '#ffee93'],
+		    normalizeFunction: 'polynomial',
+		    hoverOpacity: 0.7,
+		    hoverColor: false,
+		    markerStyle: {
+		      initial: {
+		        fill: '#F8E23B',
+		        stroke: '#383f47'
+		      }
+		    },
+		    backgroundColor: '#a0ced9',
+		    markers: [{latLng: [41.90, 12.45], name: '義大利分店'},
+				      {latLng: [32.9, 85], name: '清藏分店'},
+				      {latLng: [23.9, 120.9], name: '總店'}]
+      });
+    });
+
+    /*Donut Chart*/
+	$(function(){
+		var donutChartData = [
+		    {
+		        value: 300,
+		        color:"#F7464A",
+		        highlight: "#FF5A5E",
+		        label: "健康食品"
+		    },
+		    {
+		        value: 50,
+		        color: "#46BFBD",
+		        highlight: "#5AD3D1",
+		        label: "配件"
+		    },
+		    {
+		        value: 100,
+		        color: "#FDB45C",
+		        highlight: "#FFC870",
+		        label: "眼鏡"
+		    }
+		];
+
+		var donutChartoptions = {
+	  		responsive: true
+		};
+
+		var ctx = $("#myDonutChart").get(0).getContext("2d");
+		var myBarChart = new Chart(ctx).Doughnut(donutChartData,donutChartoptions);
+	});
+
+	/*Line Chart*/
+	$(function(){
+		var lineChartData ={
+		    labels: ["January", "February", "March", "April", "May", "June", "July"],
+		    datasets: [
+		        {
+		            label: "My First dataset",
+		            fillColor: "rgba(122,22,152,0.2)",
+		            strokeColor: "rgba(122,22,152,1)",
+		            pointColor: "rgba(122,22,152,1)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(122,22,152,1)",
+		            data: [65, 59, 80, 81, 56, 55, 40]
+		        },
+		        {
+		            label: "My Second dataset",
+		            fillColor: "rgba(51,187,205,0.2)",
+		            strokeColor: "rgba(51,187,205,1)",
+		            pointColor: "rgba(51,187,205,1)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(51,187,205,1)",
+		            data: [28, 48, 40, 19, 86, 27, 90]
+		        }
+		    ]
+		};
+
+		var lineChartoptions = {
+	  		responsive: true
+		};
+
+		var ctx = $("#myLineChart").get(0).getContext("2d");
+		var myLineChart = new Chart(ctx).Line(lineChartData,lineChartoptions);
+	});
+</script>

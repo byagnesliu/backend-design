@@ -1,0 +1,304 @@
+<!--jQuery Plugin-->
+<link type="text/css" rel="stylesheet" href="css/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="css/jsgrid-theme.min.css" />
+<link type="text/css" rel="stylesheet" href="./css/jquery.filer.css" />
+<link type="text/css" rel="stylesheet" href="./css/jquery.filer-dragdropbox-theme.css"  />
+<script src="./js/jquery.filer.min.js"></script>
+
+
+
+<!--javascript-->
+<script>
+	/*Datas of Table For Existing Img Info*/
+    var data = [
+       {
+            "ImgDate": "2016/01/01",
+            "ImgSrc": "http://placehold.it/120x80",
+            "ImgName":"ImgName",
+            "ImgCarousel":true
+        },{
+            "ImgDate": "2016/01/02",
+            "ImgSrc": "http://placehold.it/120x80",
+            "ImgName":"ImgName",
+            "ImgCarousel":true
+        },{
+            "ImgDate": "2016/01/03",
+            "ImgSrc": "http://placehold.it/120x80",
+            "ImgName":"ImgName",
+            "ImgCarousel":true
+        },{
+            "ImgDate": "2016/01/04",
+            "ImgSrc": "http://placehold.it/120x80",
+            "ImgName":"ImgName",
+            "ImgCarousel":true
+        },{
+            "ImgDate": "2016/01/05",
+            "ImgSrc": "http://placehold.it/120x80",
+            "ImgName":"ImgName",
+            "ImgCarousel":true
+        }
+
+    ];
+
+    /*Editor of Table With jQuery For Img Info*/
+    $("#jsGrid").jsGrid({
+        
+        height: 360,
+        width: "100%",
+        
+        //Functions
+        editing:true,
+        sorting: true,
+        paging: true,
+        autoload: true,
+        pageSize: 3,
+        pageButtonCount: 4,
+        deleteConfirm: "確定刪除這筆資料?",
+        rowClick: false,
+
+        //Data
+        controller: {
+        	loadData: function() {
+            	return data; // here your request to remove data service
+        }},
+
+        //Fields
+        fields: [
+            { name: "ImgDate", title:"上傳日期",type: "text", width: 100 ,align:"center",editing:false},
+        	{
+              name: "ImgSrc",title:"圖片樣式",
+              itemTemplate: function(val, item) {
+                	return $("<img>").attr("src", val);
+              },align: "center",width:120
+          	},
+            { name: "ImgName", title:"圖片名稱",type: "text", width: 100 },        
+            { name: "ImgCarousel", type: "checkbox", title: "播放", sorting: false, width: 80 },
+            { type: "control",editButton: true }
+        ]
+    });
+
+
+	//Close or Open Member Record
+    $('#uploadImg').on('click', function () {
+        $(".overlay").fadeToggle(200);
+    });
+
+    $('.overlay .fa').on('click', function () {
+        $(".overlay").fadeToggle(200);
+    });
+
+    $('#goBack').on('click', function () {
+        $(".overlay").fadeToggle(200);
+    });
+
+
+    //Upload Img
+    $('#filer_input').filer({
+    	limit: 3,
+    	maxSize: 10,
+	    changeInput: '<div class="jFiler-input-dragDrop">\
+	    				<div class="jFiler-input-inner">\
+	    					<div class="jFiler-input-icon">\
+	    						<i class="icon-jfi-cloud-up-o"></i>\
+	    					</div>\
+	    					<div class="jFiler-input-text">\
+	    						<h3>Drag & Drop files here</h3>\
+	    						<span style="display:inline-block; margin: 5px 0">or</span>\
+	    					</div>\
+	    					<a class="jFiler-input-choose-btn blue">Browse Files</a>\
+	    				</div>\
+	    			</div>',
+	    showThumbs: true,
+	    theme: "dragdropbox",
+	    templates: {
+	        box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
+	        item: '<li class="jFiler-item">\
+	                    <div class="jFiler-item-container">\
+	                        <div class="jFiler-item-inner">\
+	                            <div class="jFiler-item-thumb">\
+	                                <div class="jFiler-item-status"></div>\
+	                                <div class="jFiler-item-info">\
+	                                    <span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
+	                                    <span class="jFiler-item-others">{{fi-size2}}</span>\
+	                                </div>\
+	                                {{fi-image}}\
+	                            </div>\
+	                            <div class="jFiler-item-assets jFiler-row">\
+	                                <ul class="list-inline pull-left">\
+	                                    <li>{{fi-progressBar}}</li>\
+	                                </ul>\
+	                                <ul class="list-inline pull-right">\
+	                                    <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
+	                                </ul>\
+	                            </div>\
+	                        </div>\
+	                    </div>\
+	                </li>',
+	        itemAppend: '<li class="jFiler-item">\
+	                        <div class="jFiler-item-container">\
+	                            <div class="jFiler-item-inner">\
+	                                <div class="jFiler-item-thumb">\
+	                                    <div class="jFiler-item-status"></div>\
+	                                    <div class="jFiler-item-info">\
+	                                        <span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
+	                                        <span class="jFiler-item-others">{{fi-size2}}</span>\
+	                                    </div>\
+	                                    {{fi-image}}\
+	                                </div>\
+	                                <div class="jFiler-item-assets jFiler-row">\
+	                                    <ul class="list-inline pull-left">\
+	                                        <li><span class="jFiler-item-others">{{fi-icon}}</span></li>\
+	                                    </ul>\
+	                                    <ul class="list-inline pull-right">\
+	                                        <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
+	                                    </ul>\
+	                                </div>\
+	                            </div>\
+	                        </div>\
+	                    </li>',
+	        progressBar: '<div class="bar"></div>',
+	        itemAppendToEnd: false,
+	        removeConfirmation: true,
+	        _selectors: {
+	            list: '.jFiler-items-list',
+	            item: '.jFiler-item',
+	            progressBar: '.bar',
+	            remove: '.jFiler-item-trash-action'
+	        }
+	    },
+	    dragDrop: {
+	        dragEnter: null,
+	        dragLeave: null,
+	        drop: null,
+	    },
+	    uploadFile: {
+	        url: "#",
+	        data: null,
+	        type: 'POST',
+	        enctype: 'multipart/form-data',
+	        beforeSend: function(){},
+	        success: function(data, el){
+	            var parent = el.find(".jFiler-jProgressBar").parent();
+	            el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+	                $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>")
+	                .hide()
+	                .appendTo(parent)
+	                .fadeIn("slow");    
+	            });
+	        },
+	        error: function(el){
+	            var parent = el.find(".jFiler-jProgressBar").parent();
+	            el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+	                $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>")
+	                .hide()
+	                .appendTo(parent)
+	                .fadeIn("slow");    
+	            });
+	        },
+	        statusCode: null,
+	        onProgress: null,
+	        onComplete: null
+	    }
+});
+
+</script>
+
+
+
+<!--css-->
+<style>
+/*Header*/
+.header-text {
+    border-bottom: 5px solid #ddd;
+    padding-bottom: 10px;
+    margin:10px 10px 20px 10px;
+}
+
+.rowStyle{
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 15px;
+}
+
+#uploadImg{
+	float:right;
+	font-weight: 600;
+}
+
+/*Remove scrollbar form Table*/
+.jsgrid-grid-header,
+.jsgrid-grid-body{
+  overflow: auto;
+}
+
+/*Record*/
+.overlay {
+    display: none;
+    z-index: 99;
+    background: #B3DBE7 none repeat scroll 0% 0%;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.overlay .fa{
+    padding: 15px;
+    float: right;
+    margin:15px;
+
+}
+
+.uploadImgBox{
+    margin:13px;
+    min-height:95%;
+    padding:5% 10%;
+    color:#333;
+    background:white;
+    font-family: '微軟正黑體','Nixie One',  sans-serif;
+    font-size: 13pt;
+}
+
+</style>
+
+
+
+<!--HTML-->
+<div>
+	<!--Title-->
+	<h4 class="header-text">輪播管理 Carousel Management</h4>
+	<div class="row rowStyle">
+		<button type="button" class="btn btn-info" id="uploadImg"><i class="fa fa-upload"></i>  上傳圖片</button>
+	</div>
+
+	<!--Table-->
+	<div class="table-responsive">
+		<table class="table table-striped" id="jsGrid">
+	    </table>
+	</div>
+
+	<!--Show Contents-->
+    <div class="overlay">
+        <a href=""><i class="fa fa-times fa-lg"></i></a>
+        
+        <div class="uploadImgBox">
+            
+            <h4 class="header-text">上傳圖片 Upload Image (Max:3 Files)</h4>
+            <div class="row">
+                <form action="./php/upload.php" method="post" enctype="multipart/form-data">
+			      	<input type="file" name="files[]" id="filer_input" multiple="multiple">
+				</form>
+            </div>
+
+            <div class="row rowStyle">
+				<button type="button" class="btn btn-info" id="goBack">返回輪播管理</button>
+			</div>
+
+        </div> 
+
+    </div>
+
+</div>

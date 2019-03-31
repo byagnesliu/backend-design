@@ -1,0 +1,350 @@
+<html >
+	
+	<head>
+	    <meta charset="utf-8">
+	    <title>BackEnd Management</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	    <link href="css/bootstrap.min.css" rel="stylesheet">	
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"/>
+		<link href="css/animate.min.css" rel="stylesheet">
+		<link href="css/backend.css" rel="stylesheet">
+	
+		<script src="js/jquery-1.11.1.min.js"></script>		
+	    <script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.slimscroll.min.js"></script>
+		<script src="js/modernizr.min.js"></script>
+		<script src="http://cdn.ckeditor.com/4.5.4/full-all/ckeditor.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.4/adapters/jquery.js"></script>
+		<script src="js/backend.js"></script>
+
+		<script src="js/angular.min.js"></script>
+  		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"> </script>
+  		<script src="js/ngrouter.js"></script>
+
+    </head>
+
+	<body ng-app="NgPages">
+	
+		<div class="wrapper preload">
+			<header class="top-nav sidebar-mini">
+				<div class="top-nav-inner">
+					
+					<!--For Pad or Smartphone-->
+					<div class="nav-header">
+						
+						<ul class="nav-notification pull-right">
+							<li>
+								<!--Settings Icon-->
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+									<i class="fa fa-cog fa-lg"></i>
+								</a>
+								
+								<!--Top Menu Info-->
+								<ul class="dropdown-menu dropdown-sm pull-right ">
+									<li class="user-avatar">
+										<div class="user-content">
+											<h5>眼鏡總公司 / 太平分公司 </h5>
+											<a href="">登出 Log Out</a>
+										</div>
+									</li>
+									<li class="divider"></li>
+
+									<li>
+										<a href="">信件 Mail <span class="badge pull-right">8</span></a>
+									</li>
+									<li>
+										<a href="">通知 Notification <span class="badge pull-right">3</span></a>
+									</li>
+									<li>
+										<a href="#companyProfile">個檔 Company Profile</a>
+									</li>
+									<li>
+										<a target="_blank" href="http://163.17.136.212/yenbao/index.html">前往前端 FrontEnd</a>
+									</li>
+								</ul>
+
+							</li>
+						</ul>
+
+						<!--Humburger Icon-->
+						<button type="button" class="navbar-toggle pull-left sidebar-toggle" id="sidebarToggleSM">
+							<span ><i class="fa fa-bars"></i></span>
+						</button>
+
+						<!--Company Name-->
+						<a href="#" class="brand">
+							<i class="fa fa-diamond"></i><span class="brand-name">後台管理系統</span>
+						</a>
+						
+					</div>
+
+					<!--For Computer-->
+					<div class="nav-container">
+
+						<!--Humburger Icon-->
+						<button type="button" class="navbar-toggle pull-left sidebar-toggle" id="sidebarToggleLG">
+							<span ><i class="fa fa-bars"></i></span>
+						</button>
+
+						<!--Search-->
+						<ul class="nav-notification">	
+							<li class="search-list">
+								<div class="search-input-wrapper">
+									<div class="search-input">
+										<input type="text" class="form-control input-sm inline-block">
+										<a href="#" class="input-icon "><i class="fa fa-search"></i></a>
+									</div>
+								</div>
+							</li>
+						</ul>
+
+						<!--Top menu-->
+						<div class="pull-right">
+
+							<!--User Settings-->
+							<div class="user-block hidden-xs">
+								<a id="userToggle" data-toggle="dropdown">
+									<div class="user-detail inline-block">
+										眼鏡總公司 / 太平分公司 <i class="fa fa-angle-down"></i>
+									</div>
+								</a>
+
+								<div class="panel dropdown-menu user-panel">
+									<div class="panel-body paddingTB-sm">
+										<ul>
+											<li>
+												<a href="#companyProfile">
+													<i class="fa fa-edit fa-lg"></i>
+													<span>個檔 Company Profile</span>
+												</a>
+											</li>
+
+											<li>
+												<a target="_blank" href="http://163.17.136.212/yenbao/index.html">
+													<i class="fa fa-location-arrow fa-lg"></i>
+													<span>前端 To FrontEnd</span>
+												</a>
+											</li>
+
+											<li>
+												<a href="">
+													<i class="fa fa-power-off fa-lg"></i>
+													<span>登出 Log Out</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+							</div>
+
+							<!--Notifications Menu-->
+							<ul class="nav-notification">
+								
+								<!--Mail-->
+								<li>
+									<a href=""><i class="fa fa-envelope fa-lg"></i></a>
+									<span class="badge  active">8</span>
+								</li>
+
+								<!--Notification-->
+								<li>
+									<a href="" data-toggle="dropdown"><i class="fa fa-bell fa-lg"></i></a>
+									<span class="badge active">3</span>
+									<ul class="dropdown-menu notification pull-right">
+										<li><a href="#">你有 3 則新通知 New notifications</a></li>					  
+										<li>
+											<a href="#">
+												<span class="notification-icon">
+													<i class="fa fa-warning"></i>
+												</span>
+												<span>郵件未回覆</span>
+												<span class="time text-muted">剛剛</span>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<span class="notification-icon">
+													<i class="fa fa-plus"></i>
+												</span>
+												<span>台北分公司創立</span>
+												<span class="time text-muted">2分鐘前</span>
+											</a>
+										</li>
+										<li>
+											<a href="#">
+												<span class="notification-icon">
+													<i class="fa fa-bolt"></i>
+												</span>
+												<span>程式異常</span>
+												<span class="time text-muted">7分鐘前</span>
+											</a>
+										</li>
+										<li><a href="#">觀看所有通知  View all notifications</a></li>					  
+									</ul>
+								</li>
+
+							</ul>
+						</div><!--Top menu-->
+
+					</div> <!--For Computer-->
+				</div><!-- top-nav-inner -->	
+			</header>
+
+			
+
+			<aside class="sidebar-menu fixed sidebar-mini">
+				<div class="slimScrollDiv">
+					<div class="sidebar-inner scrollable-sidebar">
+					
+					<!--Side Menu-->
+					<div class="main-menu">
+						<ul>
+
+							<!--Company Branches Id Management -->
+							<a href="#branchManagement">
+								<li class="openable bg-palette3">
+										<span class="menu-content">
+											<span class="menu-icon">
+												<i class="block fa fa-home fa-lg"></i>
+											</span>
+											<span class="text">分店管理</span>
+										</span>
+										<span class="menu-content-hover block">
+											分店管理
+										</span>									
+								</li>
+							</a>
+								
+
+							<!--Members Management-->
+							<a href="#memberManagement">
+								<li class="openable bg-palette4">									
+										<span class="menu-content block">
+											<span class="menu-icon">
+												<i class="block fa fa-user fa-lg"></i>
+											</span>
+											<span class="text">會員管理</span>
+										</span>
+										<span class="menu-content-hover block">
+											會員管理
+										</span>									
+								</li>
+							</a>
+
+							<!--Carousel Management-->
+							<a href="#carouselManagement">
+								<li class="openable bg-palette2">									
+										<span class="menu-content block">
+											<span class="menu-icon">
+												<i class="block fa fa-bullhorn fa-lg"></i>
+											</span>
+											<span class="text">輪播管理</span>
+										</span>
+										<span class="menu-content-hover block">
+											輪播管理
+										</span>																	
+								</li>
+							</a>
+
+							<!--News-->
+							<a href="#newsManagement">
+								<li class="openable bg-palette1">									
+										<span class="menu-content block">
+											<span class="menu-icon">
+												<i class="block fa fa-clock-o fa-lg"></i>
+											</span>
+											<span class="text">最新消息管理</span>
+										</span>
+										<span class="menu-content-hover block">
+											最新消息
+										</span>									
+								</li>
+							</a>
+
+							<!--Activity-->
+							<a href="#activityManagement">
+								<li class="openable bg-palette3">									
+										<span class="menu-content block">
+											<span class="menu-icon">
+												<i class="block fa fa-newspaper-o fa-lg"></i>
+											</span>
+											<span class="text">活動消息管理</span>
+										</span>
+										<span class="menu-content-hover block">
+											活動消息
+										</span>									
+								</li>
+							</a>
+
+							<!--Products-->
+							<a href="#productManagement">
+								<li class="openable bg-palette4">									
+										<span class="menu-content block">
+											<span class="menu-icon">
+												<i class="block fa fa-tag fa-lg"></i>
+											</span>
+											<span class="text">商品管理</span>
+										</span>
+										<span class="menu-content-hover block">
+											商品管理
+										</span>
+								</li>
+							</a>
+
+							<!--Knowledge-->
+							<a href="#knowledgeManagement">
+								<li class="openable bg-palette2">
+										<span class="menu-content block">
+											<span class="menu-icon">
+												<i class="block fa fa-star fa-lg"></i>
+											</span>
+											<span class="text">知識分享管理</span>
+										</span>
+										<span class="menu-content-hover block">
+											知識分享
+										</span>
+								</li>
+							</a>
+
+							<!--Analysis-->
+							<a href="#analysisManagement">	
+								<li class="openable bg-palette1" >
+										<span class="menu-content block">
+											<span class="menu-icon">
+												<i class="block fa fa-bar-chart fa-lg"></i>
+											</span>
+											<span class="text">流量分析</span>
+										</span>
+										<span class="menu-content-hover block">
+											流量分析
+										</span>							
+								</li>
+							</a>
+
+						</ul>
+					</div>
+				</div>
+			</aside>
+
+			<!--Contents Show With Angular-->
+			<div class="main-container sidebar-mini">
+				<div class="padding-md">
+					<div ng-view></div>
+				</div>
+			</div>
+
+		</div><!--wrapper-->
+
+		<!--Go to Top
+		<a  class="scroll-to-top hidden-print">
+			<i class="fa fa-chevron-up fa-lg"></i>
+		</a>-->
+
+
+
+
+
+	</body>
+</html>

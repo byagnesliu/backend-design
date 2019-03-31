@@ -1,0 +1,332 @@
+
+<style>
+/*Header*/
+.header-text {
+  	border-bottom: 5px solid #ddd;
+  	padding-bottom: 10px;
+  	margin:0px 10px 30px 10px;
+}
+
+.header-text-sm {
+  	border-bottom: 5px double #9CAFB7;
+	padding-bottom: 10px;
+	margin: 25px;
+	color: #9CAFB7;
+	font-weight: 600;
+	opacity: 0.7;
+}
+
+/*Company Pic*/
+.company-profile-pic img {
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  display: block;
+  border: 4px solid #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .15)
+}
+
+/*Company Description*/
+.company-profile-description .company-name{
+  	text-align: center;
+  	font-size: 14pt;
+  	font-weight: 700;
+  	padding-top: 10px; 
+}
+
+.company-profile-description .company-id{
+	text-align: center;
+	font-size: 11pt;
+	padding-top: 10px;
+}
+
+/*Right Side*/
+.smart-widget {
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  margin-bottom: 20px;
+  border-color: #e4e4e4;
+  border-top-width: 4px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
+}
+
+.smart-widget .smart-widget-inner {
+  border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  -webkit-border-radius: 0 0 3px 3px
+}
+
+.smart-widget .smart-widget-inner .smart-widget-body {
+  padding: 15px
+}
+
+/*Tab*/
+.tab-style {
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 20px
+}
+
+.tab-style.tab-right li {
+  float: right
+}
+
+.tab-style li a {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #aaa;
+  border-radius: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease
+}
+
+.tab-style li a .icon-wrapper {
+  display: inline-block;
+  font-size: 18px;
+  line-height: 30px
+}
+
+.tab-style li a .text-wrapper {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 7px;
+  margin-left: 7px
+}
+
+.tab-style li a:hover {
+  border-bottom-color: #2baab1;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease
+}
+
+/*Label*/
+.label-style{
+	padding-top: 7px;
+	padding-left: 10%;
+	margin-bottom: 0px;
+	text-align: left;
+}
+
+</style>
+
+
+
+<div>
+	<!--Title-->
+	<h4 class="header-text">公司個檔 Company Profile</h4>
+	
+	<!--Content-->
+	<div class="row">
+		<!--Left Side-->
+		<div class="col-md-3">
+			<div class="row">
+
+				<!--Company Pic-->
+				<div class="col-sm-4 col-md-12 company-profile-pic">
+					<img src="http://glassesss.com/images/glasses-design/8404-product-design-insta-glass-concept-featured-copy.png" alt="">
+				</div>
+				
+				<!--Company Description-->
+				<div class="col-sm-6 col-md-12 company-profile-description">
+					<div class="company-name">眼鏡總公司/太平分公司</div>
+					<div class="company-id">
+						<i class="fa fa-briefcase"></i>
+						公司代碼: #0001
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+		<!--Right Side-->
+		<div class="col-md-9">
+			<div class="smart-widget">
+				<div class="smart-widget-inner">
+				
+					<!--Tab-->
+					<ul class="nav nav-tabs tab-style tab-right " id="myTab">
+						<li class="active">
+						    <a href="#profileTab1" data-toggle="tab">
+								<span class="icon-wrapper"><i class="fa fa-trophy"></i></span>
+				  				<span class="text-wrapper">關於公司</span>
+				  			</a>
+				  		</li>
+								  			
+						<li class="">
+							<a href="#profileTab2" data-toggle="tab">
+								<span class="icon-wrapper"><i class="fa fa-book"></i></span>
+								<span class="text-wrapper">公司個資</span>
+							</a>
+						</li>
+					</ul>
+
+					<!--Tab Content-->
+					<div class="smart-widget-body">
+						<div class="tab-content">
+
+							<!--profileTab1 關於公司-->
+							<div class="tab-pane fade in active" id="profileTab1">
+
+								<h4 class="header-text-sm">經營方針</h4>
+								
+								<form class="form-horizontal" role="form">
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">公司負責人</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="黃經理">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">創建日期</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="2015/01/01">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">公司願景</label>
+										<div class="col-sm-8">
+											<textarea class="form-control"  id="comment">期待並重視每一次與人們之間的互動，因此我們致力於營造一個﹐讓每個置身其中的人﹐都能滿心歡愉的環境。
+											</textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">經營理念</label>
+										<div class="col-sm-8">
+											<textarea class="form-control"  id="comment">期待並重視每一次與人們之間的互動，因此我們致力於營造一個﹐讓每個置身其中的人﹐都能滿心歡愉的環境。
+											</textarea>
+										</div>
+									</div>
+
+									
+									<div class="form-group"> 
+										<label class="col-sm-3"></label>
+    									<div class="col-sm-8">
+      										<button type="submit" class="btn btn-info">儲存變更</button>
+   										 </div>
+  									</div>
+									
+
+								</form>
+							</div>
+
+
+							<!--profileTab2 公司個資-->
+							<div class="tab-pane fade in" id="profileTab2">
+
+								<h4 class="header-text-sm">基本資料</h4>
+								
+								<form class="form-horizontal m-top-md">
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">公司名稱</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="眼鏡總公司/太平分公司">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">公司電話</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="04-25000000">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">公司地址</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="台灣台中市東區旱溪街386號">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">公司信箱</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="name@example.com">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">營業時間</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="星期一~星期五: 9:00 AM to 5:00 PM">
+										</div>
+									</div>	
+
+									<h4 class="header-text-sm">帳號設定</h4>	
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">管理帳號</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" value="glassesId">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">管理密碼</label>
+										<div class="col-sm-8">
+											<input type="password" class="form-control" value="glassesPwd">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 label-style">再次密碼確認</label>
+										<div class="col-sm-8">
+											<input type="password" class="form-control" value="">
+										</div>
+									</div>							
+																							
+
+									<div class="form-group ">
+										<label class="col-sm-3"></label>
+										<div class="col-sm-8">
+											<a class="btn btn-info">儲存資料變更</a>
+										<div>
+									</div>
+
+								</form>
+							</div><!-- ./tab-pane -->
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#myTab a").click(function(e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+});
+</script>
+
+

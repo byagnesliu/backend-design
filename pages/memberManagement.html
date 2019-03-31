@@ -1,0 +1,288 @@
+<!--jQuery PlugIn-->
+<link type="text/css" rel="stylesheet" href="css/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="css/jsgrid-theme.min.css" />
+
+
+<!--CSS-->
+<style>
+/*Header*/
+.header-text {
+    border-bottom: 5px solid #ddd;
+    padding-bottom: 10px;
+    margin:10px 10px 30px 10px;
+}
+
+/*Record*/
+.overlay {
+    display: none;
+    z-index: 99;
+    overflow-x: auto;
+    background: #FF9F89 none repeat scroll 0% 0%;
+    overflow-y: hidden;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.overlay .fa{
+    padding: 15px;
+    float: right;
+    margin:15px;
+
+}
+
+.recordBox{
+    margin:13px;
+    min-height:95%;
+    padding:5% 10%;
+    color:#333;
+    background:white;
+    font-family: '微軟正黑體','Nixie One',  sans-serif;
+    font-size: 13pt;
+}
+
+.memberInfo{
+    margin: 0px auto;
+    color:#4C5C68;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+.purchcaseInfo{
+    margin: 0px auto;
+    color:#E84855;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+</style>
+
+
+
+<!--HTML-->
+<div>
+    <h4 class="header-text">會員管理 Member Management</h4>
+    <!--Table-->
+    <div class="table-responsive">        
+        <table class="table table-striped" id="memberGrid">
+        </table>
+    </div>
+
+    <!--Show Contents-->
+    <div class="overlay">
+        <a href=""><i class="fa fa-times fa-lg"></i></a>
+        <div class="recordBox">
+            
+            <h4 class="header-text">消費紀錄 Purchase Record</h4>
+            <div class="row memberInfo">
+                <p class="col-md-3">會員編號: M0001</p>
+                <p class="col-md-3">會員名稱: 王曉明</p>
+                <p class="col-md-6">會員地址: 台灣台中市太平區中正路70號</p>
+            </div>
+
+            <div class="row purchcaseInfo">
+                <p class="col-md-3">總消費額: $3,600</p>
+                <p class="col-md-3">紅利點數: 72</p>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped" id="purchaseGrid">
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<!--Javascript-->
+<script>
+
+    /*Datas of Table For Member Info*/
+    var data = [
+        {
+            "No": "M0001",
+            "Name": "王曉明",
+            "Phone":"0912345678",
+            "Email":"email@gmail.com",
+            "Id": "memberId",
+            "Pwd": "memberPwd",        
+            "Store": "太平分公司",
+            "Stop":false
+        },{
+            "No": "M0002",
+            "Name": "陳曉東",
+            "Phone":"0912345678",
+            "Email":"email@gmail.com",
+            "Id": "memberId",
+            "Pwd": "memberPwd",        
+            "Store": "太平分公司",
+            "Stop":false
+        },{
+            "No": "M0003",
+            "Name": "孫曉空",
+            "Phone":"0912345678",
+            "Email":"email@gmail.com",
+            "Id": "memberId",
+            "Pwd": "memberPwd",        
+            "Store": "大里分公司",
+            "Stop":false
+        },{
+            "No": "M0004",
+            "Name": "劉曉恩",
+            "Phone":"0912345678",
+            "Email":"email@gmail.com",
+            "Id": "memberId",
+            "Pwd": "memberPwd",        
+            "Store": "大里分公司",
+            "Stop":false
+        },{
+            "No": "M0005",
+            "Name": "林曉其",
+            "Phone":"0912345678",
+            "Email":"email@gmail.com",
+            "Id": "memberId",
+            "Pwd": "memberPwd",        
+            "Store": "神岡分公司",
+            "Stop":false
+        },{
+            "No": "M0006",
+            "Name": "李曉金",
+            "Phone":"0912345678",
+            "Email":"email@gmail.com",
+            "Id": "memberId",
+            "Pwd": "memberPwd",        
+            "Store": "北京分公司",
+            "Stop":false
+        }
+
+    ];
+
+
+    /*Editor of Table With jQuery For Member Info*/
+    $("#memberGrid").jsGrid({
+        
+        height: 440,
+        width: "100%",
+        
+        //Functions
+        filtering: true,
+        editing: true,
+        sorting: true,
+        paging: true,
+        autoload: true,
+        pageSize: 8,
+        pageButtonCount: 5,
+        deleteConfirm: "確定刪除這筆資料?",
+        rowClick: false,
+
+        //Data
+        data:data,
+
+        //Fields
+        fields: [
+            { name: "No", title:"會員編號",type: "text", width: 90 ,editing:false},
+            { name: "Name", title:"會員姓名",type: "text", width: 100 },
+            { name: "Phone", title:"會員電話",type: "text", width: 120 },
+            { name: "Email", title:"會員信箱",type: "text", width: 200 },
+            { name: "Id", title:"帳號",type: "text", width: 100 },
+            { name: "Pwd", title:"密碼",type: "password", width: 100 },
+            { name: "Store", title:"註冊店家",type: "text", width: 100,editing:false },
+            { name: "Stop", type: "checkbox", title: "停用", sorting: false },
+            { name: "Record",title:"消費紀錄", width: 90,align: "center",
+                itemTemplate: function(_, item) {
+                    return $("<button>").text('Record')
+                           .css('background','#F6886F')
+                           .css('border','1px solid #E78551')
+                           .css('border-radius','3px')
+                           .css('color','white')
+                           .css('text-align','center')
+                           .on("click", function() {
+                                $(".overlay").fadeToggle(200);
+                        });
+                }
+            },
+            { type: "control" }
+        ]
+    });
+
+
+
+    /*Datas of Table For Purchase Info*/
+    var purchaseData = [
+        {
+            "Date": "2016/01/01",
+            "Time": "13:00:09",
+            "Product":"葉黃素",
+            "ProductNum":"1",
+            "ProductCost": "200",
+            "ProductBonus": "4"
+        },{
+            "Date": "2016/01/04",
+            "Time": "15:40:39",
+            "Product":"太陽眼鏡",
+            "ProductNum":"1",
+            "ProductCost": "1000",
+            "ProductBonus": "20"
+        },{
+            "Date": "2016/01/11",
+            "Time": "19:30:05",
+            "Product":"葉黃素",
+            "ProductNum":"5",
+            "ProductCost": "1000",
+            "ProductBonus": "20"
+        },{
+            "Date": "2016/01/23",
+            "Time": "12:40:39",
+            "Product":"藍光眼鏡",
+            "ProductNum":"1",
+            "ProductCost": "1200",
+            "ProductBonus": "24"
+        },{
+            "Date": "2016/02/11",
+            "Time": "14:34:05",
+            "Product":"葉黃素",
+            "ProductNum":"1",
+            "ProductCost": "200",
+            "ProductBonus": "4"
+        }];       
+
+    /*Editor of Table With jQuery For Purchase Info*/
+    $("#purchaseGrid").jsGrid({
+        
+        height: 180,
+        width: "100%",
+        
+        //Functions
+        sorting: true,
+        paging: true,
+        autoload: true,
+        pageSize: 4,
+        pageButtonCount: 5,
+        deleteConfirm: "確定刪除這筆資料?",
+        rowClick: false,
+
+        //Data
+        data:purchaseData,
+
+        //Fields
+        fields: [
+            { name: "Date", title:"購買日期",type: "text", width: 100 ,align:"center"},
+            { name: "Time", title:"購買時間",type: "text", width: 100 ,align:"center" },
+            { name: "Product", title:"商品名稱",type: "text", width: 150 },
+            { name: "ProductNum", title:"商品數量",type: "number" ,width:90,align:"center" },
+            { name: "ProductCost", title:"商品價格",type: "number" },
+            { name: "ProductBonus", title:"商品紅利",type: "number" }
+        ]
+    });
+
+
+    //Hide Member Record
+    $('.overlay .fa').on('click', function () {
+        $(".overlay").fadeToggle(200);
+    });
+
+</script>

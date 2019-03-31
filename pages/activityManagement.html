@@ -1,0 +1,431 @@
+<!--jQuery CSS PlugIn-->
+<link type="text/css" rel="stylesheet" href="css/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="css/jsgrid-theme.min.css" />
+<link type="text/css" rel="stylesheet" href="css/sumoselect.css" />
+<link type="text/css" rel="stylesheet" href="css/jquery.filer.css" />
+<link type="text/css" rel="stylesheet" href="css/jquery.filer-dragdropbox-theme.css"  />
+<link href="css/jquery.steps.css" rel="stylesheet"/>
+
+
+<!--css-->
+<style>
+/*Header*/
+.header-text {
+    border-bottom: 5px solid #ddd;
+    padding-bottom: 10px;
+    margin:10px 10px 20px 10px;
+}
+
+.rowStyle{
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 15px;
+}
+
+#addActivity{
+	float:right;
+	font-weight: 600;
+	background-color: #8598B6;
+    border-color: #898AAB;
+}
+
+#addActivity:hover{
+	background-color: #677B99;
+    border-color: #898AAB;
+}
+
+/*EditorBg*/
+.overlay {
+    display: none;
+    z-index: 99;
+    background: #C2CAE1 none repeat scroll 0% 0%;
+    overflow-y: auto;
+    overflow-x: auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.overlay .fa{
+    padding: 15px;
+    float: right;
+    margin:15px;
+
+}
+
+.editorBox{
+    margin:10px;
+    min-height:95%;
+    padding:5% 10%;
+    color:#333;
+    background:white;
+    font-family: '微軟正黑體','Nixie One',  sans-serif;
+    font-size: 13pt;
+}
+
+/*Selector*/
+.SumoSelect .select-all{
+	height: 100%;
+}
+
+/*Upload CoverImg*/
+.jFiler-theme-default .jFiler-input{
+    width:100%;
+}
+
+/*Editor Form*/
+.form-horizontal .form-group{
+	margin:0px;
+	margin-bottom:10px; 
+}
+
+</style>
+
+
+
+<!--Html-->
+<div>
+    <h4 class="header-text">活動消息 Activity Management</h4>
+    <div class="row rowStyle">
+		<button type="button" class="btn btn-info" id="addActivity"><i class="fa fa-file-text"></i>  新增活動消息</button>
+	</div>
+
+	<!--Table-->
+    <div class="table-responsive">        
+        <table class="table table-striped" id="newsGrid">
+        </table>
+    </div>
+
+    <!--Show Contents-->
+    <div class="overlay">
+        
+        <a href=""><i class="fa fa-times fa-lg"></i></a>
+        
+        <div class="editorBox">            
+            <h4 class="header-text">活動消息 Publish a News</h4> 
+
+            <form class="form-horizontal" id="formExample" data-validate="parsley" novalidate>
+                <div id="formWizard" class="light-background">
+                    <h2>活動標題</h2>
+                     <section>
+                        <div class="padding-md">
+
+                            <div class="form-group">
+                                <label>發布對象:</label>
+                                <div>                      
+                                    <select multiple="multiple" class="SlectBox" >
+                                        <option value="branchA">太平分公司</option>
+                                        <option value="branchB">大里分公司</option>
+                                        <option value="branchC">神岡分公司</option>
+                                        <option value="branchD">新社分公司</option>
+                                        <option value="branchE">北京分公司</option>
+                                    </select>   
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>活動標題:</label>
+                                <div>
+                                    <input type="text" class="form-control" value="標題一" required="">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>封面照片:</label>
+                                <div>
+                                    <input type="file" name="files[]" id="uploadCoverImg">                       
+                                </div>
+                            </div>
+                    </section>
+
+
+                    <h2>活動內容</h2>
+                    <section>
+                        <div class="padding-md">
+
+                            <div class="form-group">
+                                <label>活動內容:</label>
+                                <div><div id="editor"></div></div>                     
+                            </div>
+                                               
+                        </div>
+                    </section>
+
+
+                    <h2>活動紀錄</h2>
+                    <section>
+                        <div class="padding-md">
+
+                            <div class="form-group">
+                                <label>影片網址:</label>
+                                <div>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>照片區:</label>
+                                <div>
+                                    <input type="file" name="files[]" id="uploadActivityImg">                       
+                                </div>
+                            </div>
+                                               
+                        </div>
+                    </section>
+                                       
+                </div>
+            </form> 
+        </div>
+
+    </div>
+</div>	
+
+
+
+
+<!-- jQuery JS PlugIn -->
+<script type="text/javascript" src="js/jsgrid.min.js"></script>
+<script src="js/parsley.min.js"></script>
+<script src='js/jquery.steps.min.js'></script>
+<script type="text/javascript" src="js/jquery.sumoselect.min.js"></script>
+
+
+
+<!--javascript-->
+<script>
+
+/*Datas of Table For Member Info*/
+$(function ()   {
+    var data = [
+        {
+            "activityDate": "2016/02/01",
+            "activityTitle": "活動標題一",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":true
+        },{
+            "activityDate": "2016/02/02",
+            "activityTitle": "活動標題二",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":true
+        },{
+            "activityDate": "2016/02/03",
+            "activityTitle": "活動標題三",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":true
+        },{
+            "activityDate": "2016/02/04",
+            "activityTitle": "活動標題四",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":false
+        },{
+            "activityDate": "2016/02/05",
+            "activityTitle": "活動標題五",
+            "activityImgSrc":"http://placehold.it/120x80",
+            "activityPublish":true
+        }
+
+    ];
+
+
+    /*Editor of Table With jQuery For Member Info*/
+    $("#newsGrid").jsGrid({
+        
+        height: 360,
+        width: "100%",
+        
+        //Functions
+        editing: true,
+        sorting: true,
+        paging: true,
+        autoload: true,
+        pageSize: 3,
+        pageButtonCount: 5,
+        deleteConfirm: "確定刪除這筆資料?",
+        rowClick: false,
+
+        //Data
+        data:data,
+
+        //Fields
+        fields: [
+            { name: "activityDate", title:"發布日期",type: "text", width: 120 ,align:"center",editing:false},
+            { name: "activityTitle", title:"活動標題",type: "text", width: 150 },
+            {
+              name: "activityImgSrc",title:"封面照片",
+              itemTemplate: function(val, item) {
+                    return $("<img>").attr("src", val);
+              },align: "center",width:120
+            },
+            { name: "activityPublish", type: "checkbox", title: "發布", sorting: false },
+            { name: "activityEdit",title:"內容編輯", width: 90,align: "center",
+                itemTemplate: function(_, item) {
+                    return $("<button>").text('編輯')
+                           .css('background','#9EA6CC')
+                           .css('border','1px solid #898AAB')
+                           .css('border-radius','3px')
+                           .css('color','white')
+                           .css('text-align','center')
+                           .on("click", function() {
+                                $(".overlay").fadeToggle(200);
+                        });
+                }
+            },
+            { type: "control" }
+        ]
+    });
+});
+
+
+/*Close or Open Member Record*/
+$(function ()   {
+    $('#addActivity').on('click', function () {
+        $(".overlay").fadeToggle(200);
+    });
+
+    $('.overlay .fa').on('click', function () {
+        $(".overlay").fadeToggle(200);
+    });
+
+});
+
+
+/*Steps*/
+$(function ()   {
+    $("#formWizard").steps({
+        headerTag: "h2",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        onStepChanging: function (event, currentIndex, newIndex) { 
+                            if(newIndex > currentIndex) { 
+                                if($('#formExample').parsley().validate('step' + newIndex)) {
+                                    return true;
+                                }
+                                else    {
+                                    return false;
+                                }
+                            }
+                            else    {
+                                return true;
+                            }                      
+        },
+        onFinished: function (event, currentIndex) { 
+                            $(".overlay").fadeToggle(200);
+        }
+    });
+});
+
+
+/*Selector*/
+$(document).ready(function() {
+    $('.SlectBox').SumoSelect({ csvDispCount: 3});
+});
+
+
+/*CoverImg Upload*/
+$('#uploadCoverImg').filer({
+    limit: 1,
+    maxSize: 3,
+    extensions: ['jpg', 'jpeg', 'png', 'gif'],
+    changeInput: true,
+    showThumbs: true
+});
+
+
+/*Editor*/
+$(function ()   {
+    $('#editor').html("<form><textarea id=foo></textarea></form>");
+
+    $('textarea#foo').ckeditor({
+        height: "200px",
+        width: "100%",
+        toolbarStartupExpanded: true,
+    });
+});
+
+
+/*ActivityImg Upload*/
+$('#uploadActivityImg').filer({
+    showThumbs: true,
+    templates: {
+        box: '<ul class="jFiler-items-list jFiler-items-grid"></ul>',
+        item: '<li class="jFiler-item">\
+                    <div class="jFiler-item-container">\
+                        <div class="jFiler-item-inner">\
+                            <div class="jFiler-item-thumb">\
+                                <div class="jFiler-item-status"></div>\
+                                <div class="jFiler-item-info">\
+                                    <span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
+                                    <span class="jFiler-item-others">{{fi-size2}}</span>\
+                                </div>\
+                                {{fi-image}}\
+                            </div>\
+                            <div class="jFiler-item-assets jFiler-row">\
+                                <ul class="list-inline pull-left">\
+                                    <li>{{fi-progressBar}}</li>\
+                                </ul>\
+                                <ul class="list-inline pull-right">\
+                                    <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
+                                </ul>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </li>',
+        itemAppend: '<li class="jFiler-item">\
+                        <div class="jFiler-item-container">\
+                            <div class="jFiler-item-inner">\
+                                <div class="jFiler-item-thumb">\
+                                    <div class="jFiler-item-status"></div>\
+                                    <div class="jFiler-item-info">\
+                                        <span class="jFiler-item-title"><b title="{{fi-name}}">{{fi-name | limitTo: 25}}</b></span>\
+                                        <span class="jFiler-item-others">{{fi-size2}}</span>\
+                                    </div>\
+                                    {{fi-image}}\
+                                </div>\
+                                <div class="jFiler-item-assets jFiler-row">\
+                                    <ul class="list-inline pull-left">\
+                                        <li><span class="jFiler-item-others">{{fi-icon}}</span></li>\
+                                    </ul>\
+                                    <ul class="list-inline pull-right">\
+                                        <li><a class="icon-jfi-trash jFiler-item-trash-action"></a></li>\
+                                    </ul>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </li>',
+        progressBar: '<div class="bar"></div>',
+        itemAppendToEnd: false,
+        removeConfirmation: true,
+        _selectors: {
+            list: '.jFiler-items-list',
+            item: '.jFiler-item',
+            progressBar: '.bar',
+            remove: '.jFiler-item-trash-action'
+        }
+    },
+    uploadFile: {
+        url: "./php/upload.php",
+        data: null,
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        beforeSend: function(){},
+        success: function(data, el){
+            var parent = el.find(".jFiler-jProgressBar").parent();
+            el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                $("<div class=\"jFiler-item-others text-success\"><i class=\"icon-jfi-check-circle\"></i> Success</div>").hide().appendTo(parent).fadeIn("slow");    
+            });
+        },
+        error: function(el){
+            var parent = el.find(".jFiler-jProgressBar").parent();
+            el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
+                $("<div class=\"jFiler-item-others text-error\"><i class=\"icon-jfi-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");    
+            });
+        },
+        statusCode: null,
+        onProgress: null,
+        onComplete: null
+    }
+});
+
+</script>
